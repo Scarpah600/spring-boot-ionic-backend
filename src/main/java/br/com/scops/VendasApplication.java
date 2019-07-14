@@ -9,12 +9,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.scops.dao.CategoriaDAO;
 import br.com.scops.dao.CidadeDAO;
+import br.com.scops.dao.ClienteDAO;
+import br.com.scops.dao.EnderecoDAO;
 import br.com.scops.dao.EstadoDAO;
 import br.com.scops.dao.ProdutoDAO;
 import br.com.scops.domain.Categoria;
 import br.com.scops.domain.Cidade;
+import br.com.scops.domain.Cliente;
+import br.com.scops.domain.Endereco;
 import br.com.scops.domain.Estado;
 import br.com.scops.domain.Produto;
+import br.com.scops.domain.enums.TipoCliente;
 
 @SpringBootApplication
 public class VendasApplication implements CommandLineRunner{
@@ -26,10 +31,16 @@ public class VendasApplication implements CommandLineRunner{
 	private EstadoDAO estadodao;
 	@Autowired
 	private CidadeDAO cidadedao;
-	
-
 	@Autowired
 	private ProdutoDAO pdao;
+	
+	@Autowired
+	private EnderecoDAO enderecodao;
+	@Autowired
+	private ClienteDAO clientedao;
+	
+	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(VendasApplication.class, args);
 	}
@@ -55,6 +66,15 @@ public class VendasApplication implements CommandLineRunner{
 		Cidade c5 = new Cidade(null,"Itararé",est2);
 		
 		
+		Cliente cli1 = new Cliente(null,"Gustavo Scarpin", "gustavo.scarpin.2020@gmail.com", "068.238.119-51",TipoCliente.PESSOAFISICA);
+		
+		cli1.getTelefones().addAll(Arrays.asList("97108812","3399-3873"));
+		
+		Endereco e1 = new Endereco(null, "Rua Teodoro Agustyn", "634", "Rua", "Vila Itaqui", "83604-360", cli1,c4);
+		
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1));
+		
 		cat1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
 		
@@ -70,6 +90,8 @@ public class VendasApplication implements CommandLineRunner{
 	    pdao.saveAll(Arrays.asList(p1,p2,p3));
 	    estadodao.saveAll(Arrays.asList(est1,est2,est3));
 	    cidadedao.saveAll(Arrays.asList(c1,c2,c3,c4,c5));
+	    clientedao.saveAll(Arrays.asList(cli1));
+	    enderecodao.saveAll(Arrays.asList(e1));
 	}
 
 	
