@@ -10,20 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.scops.domain.Categoria;
 import br.com.scops.servicies.CategoriaService;
 
-
 @RestController
-@RequestMapping(value="/categorias")
+@RequestMapping(value = "/categorias")
 public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
-	
+
+	// Ele vai acessar o serviço
+	// vai retorna procotocolo https
 	@RequestMapping(value="/{id}",method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		
-		//Ele vai acessar o serviço
-		// vai retorna procotocolo http
 		Categoria obj = service.buscar(id);
-		
 		return ResponseEntity.ok().body(obj);
 		
 	}

@@ -15,8 +15,10 @@ public class CategoriaService {
 	private CategoriaDAO dao;
 	
 	//Vai retorna um objeto pelo id 
-	public Categoria buscar(Integer id) {
-		Optional<Categoria> obj = dao.findById(id);
-		return obj.orElse(null);
-	}
+    public Categoria buscar (Integer id) {
+    	Optional<Categoria>obj = dao.findById(id);
+    	return obj.orElseThrow(() -> new br.com.scops.servicies.ObjectNotFoundException(
+    			"Objeto não Encontrado ! id" + id + ",Tipo: " + Categoria.class.getName()));
+    }
+		
 }
