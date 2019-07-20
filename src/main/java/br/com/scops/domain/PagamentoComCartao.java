@@ -1,7 +1,9 @@
 package br.com.scops.domain;
 
-import br.com.scops.domain.enums.EstadoPagamento;
+import javax.persistence.Entity;
 
+import br.com.scops.domain.enums.EstadoPagamento;
+@Entity
 public class PagamentoComCartao extends Pagamento{
 
 	private static final long serialVersionUID = 1L;
