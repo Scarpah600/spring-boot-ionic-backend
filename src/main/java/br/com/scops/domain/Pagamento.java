@@ -2,15 +2,28 @@ package br.com.scops.domain;
 
 import java.io.Serializable;
 
-import br.com.scops.domain.enums.EstadoPagamento;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
-public class Pagamento  implements Serializable{
+import br.com.scops.domain.enums.EstadoPagamento;
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
 	private Integer id;
-	private EstadoPagamento estado;
-
-	private Pedido pedido;
+	private Integer estado;
+	
+    @OneToOne
+    @JoinColumn(name="pedido_id")
+    @MapsId
+    private Pedido pedido;
 	
 	
 	public Pagamento() {
@@ -21,7 +34,7 @@ public class Pagamento  implements Serializable{
 	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estado = estado;
+		this.estado = estado.getCod();
 		this.pedido = pedido;
 	}
 
@@ -37,12 +50,12 @@ public class Pagamento  implements Serializable{
 
 
 	public EstadoPagamento getEstado() {
-		return estado;
+		return EstadoPagamento.toEnum(estado);
 	}
 
 
 	public void setEstado(EstadoPagamento estado) {
-		this.estado = estado;
+		this.estado = estado.getCod();
 	}
 
 
