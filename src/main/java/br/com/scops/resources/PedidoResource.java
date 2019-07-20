@@ -19,9 +19,10 @@ public class PedidoResource {
 	// Ele vai acessar o serviço
 	// vai retorna procotocolo https
 	@RequestMapping(value="/{id}",method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
 		Pedido obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 		
 	}
+
 }
