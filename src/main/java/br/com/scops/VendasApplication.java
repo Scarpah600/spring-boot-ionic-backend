@@ -13,6 +13,7 @@ import br.com.scops.dao.CidadeDAO;
 import br.com.scops.dao.ClienteDAO;
 import br.com.scops.dao.EnderecoDAO;
 import br.com.scops.dao.EstadoDAO;
+import br.com.scops.dao.ItemPedidoDAO;
 import br.com.scops.dao.PagamentoDAO;
 import br.com.scops.dao.PedidoDAO;
 import br.com.scops.dao.ProdutoDAO;
@@ -21,8 +22,8 @@ import br.com.scops.domain.Cidade;
 import br.com.scops.domain.Cliente;
 import br.com.scops.domain.Endereco;
 import br.com.scops.domain.Estado;
+import br.com.scops.domain.ItemPedido;
 import br.com.scops.domain.Pagamento;
-import br.com.scops.domain.PagamentoComBoleto;
 import br.com.scops.domain.PagamentoComCartao;
 import br.com.scops.domain.Pedido;
 import br.com.scops.domain.Produto;
@@ -34,14 +35,12 @@ public class VendasApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoriaDAO dao;
-
 	@Autowired
 	private EstadoDAO estadodao;
 	@Autowired
 	private CidadeDAO cidadedao;
 	@Autowired
 	private ProdutoDAO pdao;
-
 	@Autowired
 	private EnderecoDAO enderecodao;
 	@Autowired
@@ -50,6 +49,8 @@ public class VendasApplication implements CommandLineRunner {
 	private PedidoDAO pedidodao;
 	@Autowired
 	private PagamentoDAO pagamentodao;
+	@Autowired
+	private ItemPedidoDAO itempedidodao;
 
 	public static void main(String[] args) {
 		SpringApplication.run(VendasApplication.class, args);
@@ -131,6 +132,17 @@ public class VendasApplication implements CommandLineRunner {
 		pagamentodao.saveAll(Arrays.asList(pagto1,pagto2));
 		
 
+		ItemPedido ep1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ep2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ep1,ep2));
+		
+		
+		p1.getItens().addAll(Arrays.asList(ep1));
+		p3.getItens().addAll(Arrays.asList(ep2));
+		
+		itempedidodao.saveAll(Arrays.asList(ep1,ep2));
+		
 	}
 
 }
