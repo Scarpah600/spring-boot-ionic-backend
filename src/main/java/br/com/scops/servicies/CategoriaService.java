@@ -20,5 +20,8 @@ public class CategoriaService {
     	return obj.orElseThrow(() -> new br.com.scops.servicies.ObjectNotFoundException(
     			"Objeto não Encontrado ! id" + id + ",Tipo: " + Categoria.class.getName()));
     }
-		
+	public Categoria inserindo(Categoria obj) {
+		obj.setId(null);
+		return dao.save(obj);
+	}
 }
