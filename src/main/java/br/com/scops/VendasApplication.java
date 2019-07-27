@@ -61,6 +61,14 @@ public class VendasApplication implements CommandLineRunner {
 		// Operacao de instanciação automatico
 		Categoria cat1 = new Categoria(null, "Informatica");
 		Categoria cat2 = new Categoria(null, "Escritorio");
+		Categoria cat3 = new Categoria(null, "Cama mesa banho");
+		Categoria cat4 = new Categoria(null, "Domèstico");
+		Categoria cat5 = new Categoria(null, "Esportes");
+		Categoria cat6 = new Categoria(null, "Alimentos");
+		Categoria cat7 = new Categoria(null, "Calsados");
+		Categoria cat8 = new Categoria(null, "Equipamentos Eletronicos");
+		Categoria cat9 = new Categoria(null, "Equipamento de Jardinagem");
+		Categoria cat10 = new Categoria(null, "Materiais de Construção");
 
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
@@ -103,7 +111,7 @@ public class VendasApplication implements CommandLineRunner {
 		est2.getCidades().addAll(Arrays.asList(c2, c5));
 		est3.getCidades().addAll(Arrays.asList(c3));
 
-		dao.saveAll(Arrays.asList(cat1, cat2));
+		dao.saveAll(Arrays.asList(cat1, cat2,cat3,cat4,cat5,cat6,cat7,cat8,cat9,cat10));
 		pdao.saveAll(Arrays.asList(p1, p2, p3));
 		estadodao.saveAll(Arrays.asList(est1, est2, est3));
 		cidadedao.saveAll(Arrays.asList(c1, c2, c3, c4, c5));
