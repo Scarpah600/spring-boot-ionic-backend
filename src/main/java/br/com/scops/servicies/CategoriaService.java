@@ -33,8 +33,9 @@ public class CategoriaService {
 	}
 
 	public Categoria alterando(Categoria obj) {
-		buscar(obj.getId());
-		return dao.save(obj);
+		Categoria newObj = buscar(obj.getId());
+		updateDate(newObj, obj);
+		return dao.save(newObj);
 	}
 
 	public void deletar(Integer id) {
@@ -58,5 +59,8 @@ public class CategoriaService {
 	}
 	public Categoria fromDTO(CategoriaDTO objtDtO) {
 		return new Categoria(objtDtO.getId(), objtDtO.getNome());
+	}
+	private void updateDate(Categoria newobj,Categoria obj) {
+		newobj.setNome(obj.getNome());
 	}
 }
