@@ -8,6 +8,8 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.scops.domain.Cliente;
+import br.com.scops.servicies.validation.ClienteUpdate;
+@ClienteUpdate
 
 public class ClienteDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
