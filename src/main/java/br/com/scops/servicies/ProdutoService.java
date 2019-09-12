@@ -22,6 +22,7 @@ public class ProdutoService {
 	@Autowired
 	private CategoriaDAO categoriadao;
 	//Vai retorna um objeto pelo id 
+	
     public Produto buscar (Integer id) {
     	Optional<Produto>obj = dao.findById(id);
     	return obj.orElseThrow(() -> new br.com.scops.servicies.ObjectNotFoundException(
@@ -33,7 +34,7 @@ public class ProdutoService {
 				orderBy);
     	//Busca paginada
 		List<Categoria> categorias = categoriadao.findAllById(ids);
-		return dao.search(nome,categorias,pageRequest);
+		return dao.findDistinctByNomeContainingAndCategoriasIn(nome,categorias,pageRequest);
     	
     }
 }
