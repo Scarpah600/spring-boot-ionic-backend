@@ -2,8 +2,11 @@ package br.com.scops.domain;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import br.com.scops.domain.enums.EstadoPagamento;
 @Entity
+@JsonTypeName("pagamentComCartao")
 public class PagamentoComCartao extends Pagamento{
 
 	private static final long serialVersionUID = 1L;
