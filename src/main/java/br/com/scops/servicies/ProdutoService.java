@@ -37,4 +37,6 @@ public class ProdutoService {
 		return dao.findDistinctByNomeContainingAndCategoriasIn(nome,categorias,pageRequest);
     	
     }
+	
+	
 }
