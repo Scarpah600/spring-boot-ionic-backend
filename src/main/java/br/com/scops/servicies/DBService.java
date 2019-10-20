@@ -60,6 +60,7 @@ public class DBService {
 		Categoria cat8 = new Categoria(null, "Equipamentos Eletronicos");
 		Categoria cat9 = new Categoria(null, "Equipamento de Jardinagem");
 		Categoria cat10 = new Categoria(null, "Materiais de Construção");
+		
 
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
@@ -120,7 +121,7 @@ public class DBService {
 		p9.getCategorias().addAll(Arrays.asList(cat7));
 		p10.getCategorias().addAll(Arrays.asList(cat4));
 		p11.getCategorias().addAll(Arrays.asList(cat4));
-		p12.getCategorias().addAll(Arrays.asList(cat7));
+		p12.getCategorias().addAll(Arrays.asList(cat7,cat10));
 
 		est1.getCidades().addAll(Arrays.asList(c1, c4));
 		est2.getCidades().addAll(Arrays.asList(c2, c5));
