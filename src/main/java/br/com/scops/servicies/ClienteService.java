@@ -31,10 +31,10 @@ public class ClienteService {
 	private EnderecoDAO daoendereco;
 	
 	// Vai retorna um objeto pelo id
-	public Cliente buscar(Integer id) {
+	public Cliente find(Integer id) {
 		Optional<Cliente> obj = dao.findById(id);
-		return obj.orElseThrow(() -> new br.com.scops.servicies.ObjectNotFoundException(
-				"Objeto não Encontrado ! id" + id + ",Tipo: " + Cliente.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
 	@Transactional
@@ -45,13 +45,13 @@ public class ClienteService {
 		return obj;
 	}
 	public Cliente alterando(Cliente obj) {
-		Cliente newObj = buscar(obj.getId());
-		updateDate(newObj, obj);
+		Cliente newObj = find(obj.getId());
+		updateData(newObj, obj);
 		return dao.save(newObj);
 	}
 
 	public void deletar(Integer id) {
-		buscar(id);
+		find(id);
 		try {
 			dao.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
@@ -87,10 +87,9 @@ public class ClienteService {
 		}
 		return cli;
 	}
-
-
-	private void updateDate(Cliente newobj, Cliente obj) {
-		newobj.setNome(obj.getNome());
-		newobj.setEmail(obj.getEmail());
+	
+	private void updateData(Cliente newObj, Cliente obj) {
+		newObj.setNome(obj.getNome());
+		newObj.setEmail(obj.getEmail());
 	}
 }

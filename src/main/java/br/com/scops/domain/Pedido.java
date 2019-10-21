@@ -28,7 +28,7 @@ public class Pedido implements Serializable {
 	private Date instante;
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
-    
+
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
@@ -39,8 +39,7 @@ public class Pedido implements Serializable {
 
 	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();
-	
-	
+
 	public Pedido() {
 	}
 
@@ -51,9 +50,10 @@ public class Pedido implements Serializable {
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
+
 	public double getValorTotal() {
 		double soma = 0.0;
-		for (ItemPedido ip : itens ) {
+		for (ItemPedido ip : itens) {
 			soma = soma + ip.getSubTotal();
 		}
 		return soma;
@@ -98,6 +98,7 @@ public class Pedido implements Serializable {
 	public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
+
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}
@@ -105,6 +106,7 @@ public class Pedido implements Serializable {
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -130,6 +132,24 @@ public class Pedido implements Serializable {
 		return true;
 	}
 
-	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido Numero:");
+		builder.append(getId());
+		builder.append("Instante :");
+		builder.append(getInstante());
+		builder.append("Cliente:");
+		builder.append(getCliente().getNome());
+		builder.append("Situação de Pagamento:");
+		builder.append(getPagamento().getEstado().getDescricao());
+		builder.append("\nDestalhes:\n");
+		for (ItemPedido ip : getItens()) {
+			builder.append(ip.toString());
+		}
+		builder.append("Valor Total:");
+		builder.append(getValorTotal());
 
+		return builder.toString();
+	}
 }
