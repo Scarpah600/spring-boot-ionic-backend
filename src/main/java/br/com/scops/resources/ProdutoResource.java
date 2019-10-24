@@ -17,18 +17,18 @@ import br.com.scops.resources.utils.URL;
 import br.com.scops.servicies.ProdutoService;
 
 @RestController
-@RequestMapping(value = "/produtos")
+@RequestMapping(value="/produtos")
 public class ProdutoResource {
-
+	
 	@Autowired
 	private ProdutoService service;
-
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Produto> find(@PathVariable Integer id) {
-		Produto obj = service.buscar(id);
+		Produto obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
-
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<ProdutoDTO>> findPage(
 			@RequestParam(value="nome", defaultValue="") String nome, 

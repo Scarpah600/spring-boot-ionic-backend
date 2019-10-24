@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import br.com.scops.domain.enums.EstadoPagamento;
 @Entity
-@JsonTypeName("pagamentComCartao")
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento{
 
 	private static final long serialVersionUID = 1L;

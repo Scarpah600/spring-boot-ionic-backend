@@ -14,29 +14,25 @@ import br.com.scops.dao.ProdutoDAO;
 import br.com.scops.domain.Categoria;
 import br.com.scops.domain.Produto;
 
+
 @Service
 public class ProdutoService {
-
+	
 	@Autowired
-	private ProdutoDAO dao;
+	private ProdutoDAO repo;
+	
 	@Autowired
-	private CategoriaDAO categoriadao;
-	//Vai retorna um objeto pelo id 
+	private CategoriaDAO categoriaRepository;
 	
-    public Produto buscar (Integer id) {
-    	Optional<Produto>obj = dao.findById(id);
-    	return obj.orElseThrow(() -> new br.com.scops.servicies.ObjectNotFoundException(
-    			"Objeto não Encontrado ! id" + id + ",Tipo: " + Produto.class.getName()));
-    }
-    public Page<Produto> search(String nome, List<Integer> ids,Integer page, Integer linesPerpage, String orderBy, String direction) {
+	public Produto find(Integer id) {
+		Optional<Produto> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
+	}
 
-		PageRequest pageRequest = PageRequest.of(page, linesPerpage, Direction.valueOf(direction), 
-				orderBy);
-    	//Busca paginada
-		List<Categoria> categorias = categoriadao.findAllById(ids);
-		return dao.findDistinctByNomeContainingAndCategoriasIn(nome,categorias,pageRequest);
-    	
-    }
-	
-	
+	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		List<Categoria> categorias = categoriaRepository.findAllById(ids);
+		return repo.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);	
+	}
 }

@@ -18,49 +18,49 @@ import br.com.scops.dto.CategoriaDTO;
 public class CategoriaService {
 
 	@Autowired
-	private CategoriaDAO dao;
+	private CategoriaDAO repo;
 
-	// Vai retorna um objeto pelo id
-	public Categoria buscar(Integer id) {
-		Optional<Categoria> obj = dao.findById(id);
-		return obj.orElseThrow(() -> new br.com.scops.servicies.ObjectNotFoundException(
-				"Objeto não Encontrado ! id" + id + ",Tipo: " + Categoria.class.getName()));
+	public Categoria find(Integer id) {
+		Optional<Categoria> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
-
-	public Categoria inserindo(Categoria obj) {
+	
+	public Categoria insert(Categoria obj) {
 		obj.setId(null);
-		return dao.save(obj);
+		return repo.save(obj);
 	}
-
-	public Categoria alterando(Categoria obj) {
-		Categoria newObj = buscar(obj.getId());
-		updateDate(newObj, obj);
-		return dao.save(newObj);
+	
+	public Categoria update(Categoria obj) {
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
-
-	public void deletar(Integer id) {
-		buscar(id);
+	
+	public void delete(Integer id) {
+		find(id);
 		try {
-			dao.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel deletar uma categoria que possui produtos");
+			repo.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
 		}
 	}
-
-	public List<Categoria> buscarTodos() {
-		return dao.findAll();
+	
+	public List<Categoria> findAll() {
+		return repo.findAll();
 	}
-
-	public Page<Categoria> buscarPagina(Integer page, Integer linesPerpage, String orderBy, String direction) {
-
-		PageRequest pageRequest = PageRequest.of(page, linesPerpage, Direction.valueOf(direction), 
-				orderBy);
-		return dao.findAll(pageRequest);
+	
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
 	}
-	public Categoria fromDTO(CategoriaDTO objtDtO) {
-		return new Categoria(objtDtO.getId(), objtDtO.getNome());
+	
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
-	private void updateDate(Categoria newobj,Categoria obj) {
-		newobj.setNome(obj.getNome());
+	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 }

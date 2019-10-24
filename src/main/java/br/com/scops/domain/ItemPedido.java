@@ -8,36 +8,37 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class ItemPedido implements Serializable {
-	private static final long serialVersionUID = 1L;
-	//ele é um imbutio numa classe auxiliar 
+private static final long serialVersionUID = 1L;
+	
 	@JsonIgnore
 	@EmbeddedId
 	private ItemPedidoPK id = new ItemPedidoPK();
-
+	
 	private Double desconto;
 	private Integer quantidade;
-	private Double preço;
-
+	private Double preco;
+	
 	public ItemPedido() {
-
 	}
 
-	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preço) {
+	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
 		super();
 		id.setPedido(pedido);
 		id.setProduto(produto);
 		this.desconto = desconto;
 		this.quantidade = quantidade;
-		this.preço = preço;
+		this.preco = preco;
 	}
-    public double getSubTotal() {
-    	return (preço - desconto) * desconto;
-    }
-	// Ter acesso direto fora da minha classe
+
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
+	
 	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
+	
 	public void setPedido(Pedido pedido) {
 		id.setPedido(pedido);
 	}
@@ -45,9 +46,9 @@ public class ItemPedido implements Serializable {
 	public Produto getProduto() {
 		return id.getProduto();
 	}
-    public void setProduto(Produto produto) {
-    	id.setProduto(produto);
-    }
+	public void setProduto(Produto produto) {
+		id.setProduto(produto);
+	}
 	
 	public ItemPedidoPK getId() {
 		return id;
@@ -73,12 +74,12 @@ public class ItemPedido implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public Double getPreço() {
-		return preço;
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setPreço(Double preço) {
-		this.preço = preço;
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 
 	@Override
@@ -104,20 +105,6 @@ public class ItemPedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(getProduto().getNome());
-		builder.append(",Qte: ");
-		builder.append(getQuantidade());
-		builder.append(", Preço Unitário");
-		builder.append(getPreço());
-		builder.append("Sub Total:");
-		builder.append(getSubTotal());
-		builder.append("\n");
-		return builder.toString();
 	}
     
 }

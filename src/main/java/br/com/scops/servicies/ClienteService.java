@@ -23,56 +23,56 @@ import br.com.scops.dto.ClienteNewDTO;
 
 @Service
 public class ClienteService {
-
-	@Autowired
-	private ClienteDAO dao;
 	
 	@Autowired
-	private EnderecoDAO daoendereco;
+	private ClienteDAO repo;
 	
-	// Vai retorna um objeto pelo id
+	@Autowired
+	private EnderecoDAO enderecoRepository;
+	
 	public Cliente find(Integer id) {
-		Optional<Cliente> obj = dao.findById(id);
+		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
-
+	
 	@Transactional
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);
-		obj = dao.save(obj);
-		daoendereco.saveAll(obj.getEnderecos());
+		obj = repo.save(obj);
+		enderecoRepository.saveAll(obj.getEnderecos());
 		return obj;
 	}
-	public Cliente alterando(Cliente obj) {
+	
+	public Cliente update(Cliente obj) {
 		Cliente newObj = find(obj.getId());
 		updateData(newObj, obj);
-		return dao.save(newObj);
+		return repo.save(newObj);
 	}
 
-	public void deletar(Integer id) {
+	public void delete(Integer id) {
 		find(id);
 		try {
-			dao.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir porque há pedidos relacionandos");
+			repo.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir porque há pedidos relacionados");
 		}
 	}
-
-	public List<Cliente> buscarTodos() {
-		return dao.findAll();
+	
+	public List<Cliente> findAll() {
+		return repo.findAll();
 	}
-
-	public Page<Cliente> buscarPagina(Integer page, Integer linesPerpage, String orderBy, String direction) {
-
-		PageRequest pageRequest = PageRequest.of(page, linesPerpage, Direction.valueOf(direction), orderBy);
-		return dao.findAll(pageRequest);
+	
+	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
 	}
-
-	public Cliente fromDTO(ClienteDTO objtDtO) {
-		return new Cliente(objtDtO.getId(), objtDtO.getNome(), objtDtO.getEmail(), null, null);
+	
+	public Cliente fromDTO(ClienteDTO objDto) {
+		return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
 	}
-
+	
 	public Cliente fromDTO(ClienteNewDTO objDto) {
 		Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));
 		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
