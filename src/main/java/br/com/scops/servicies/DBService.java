@@ -28,6 +28,7 @@ import br.com.scops.domain.PagamentoComCartao;
 import br.com.scops.domain.Pedido;
 import br.com.scops.domain.Produto;
 import br.com.scops.domain.enums.EstadoPagamento;
+import br.com.scops.domain.enums.Perfil;
 import br.com.scops.domain.enums.TipoCliente;
 
 @Service
@@ -93,14 +94,19 @@ public class DBService {
 				TipoCliente.PESSOAFISICA,pe.encode("123"));
 		Cliente cli2 = new Cliente(null, "Leonan Mattos", "leonan.mattos@gmail.com", "048.138.519-11",
 				TipoCliente.PESSOAFISICA,pe.encode("123"));
+		
+		
+		cli1.addPerfil(Perfil.ADMIN);
 
+		
+		
 		cli1.getTelefones().addAll(Arrays.asList("97108812", "3399-3873"));
 		cli2.getTelefones().addAll(Arrays.asList("97108812", "3399-3873"));
 
 		Endereco e1 = new Endereco(null, "Rua Teodoro Agustyn", "634", "Rua", "Vila Itaqui", "83604-360", cli1, c4);
 
 		Endereco e2 = new Endereco(null, "Rua Fernandes de Barros ", "634", "Rua", "Rua XV", "83604-360", cli2, c1);
-
+		
 		cli1.getEnderecos().addAll(Arrays.asList(e1));
 		cli2.getEnderecos().addAll(Arrays.asList(e2));
 
