@@ -18,9 +18,11 @@ import br.com.scops.dao.EnderecoDAO;
 import br.com.scops.domain.Cidade;
 import br.com.scops.domain.Cliente;
 import br.com.scops.domain.Endereco;
+import br.com.scops.domain.enums.Perfil;
 import br.com.scops.domain.enums.TipoCliente;
 import br.com.scops.dto.ClienteDTO;
 import br.com.scops.dto.ClienteNewDTO;
+import br.com.scops.security.UserSS;
 
 @Service
 public class ClienteService {
@@ -35,6 +37,10 @@ public class ClienteService {
 	private BCryptPasswordEncoder pe;
 	
 	public Cliente find(Integer id) {
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			 throw new AuthorizationException("Acesso Negado!");
+		}
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
