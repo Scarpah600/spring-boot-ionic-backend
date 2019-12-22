@@ -22,7 +22,7 @@ public class AuthResource {
 
 	@Autowired
 	private JWTUtil jwtUtil;
-
+	
 	@Autowired
 	private AuthService service;
 	
@@ -40,4 +40,5 @@ public class AuthResource {
 		service.sendNewPassword(objDto.getEmail());
 		return ResponseEntity.noContent().build();
 	}
+
 }
